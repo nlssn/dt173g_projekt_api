@@ -4,7 +4,7 @@
  * DT173G - Projekt, HT21
  */
 
-require('../config.php');
+require('../includes/config.php');
 
 class Database {
    // DB credentials
@@ -22,7 +22,7 @@ class Database {
 
       // Try to connect using PDO
       try {
-         $this->conn = new PDO('mysql:host' . $this->db_host . ';dbname=' . $this->db_name, $this->db_user, $this->db_pass);
+         $this->conn = new PDO('mysql:host=' . $this->db_host . ';dbname=' . $this->db_name, $this->db_user, $this->db_pass);
          $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
          $this->conn->exec('set names utf8');
       } catch (PDOException $err) {
@@ -32,9 +32,10 @@ class Database {
             'error' => $err->getMessage()
             )
          );
-
-         return $this->conn;
       }
+
+      // Return connection
+      return $this->conn;
    }
 
    public function close() {
